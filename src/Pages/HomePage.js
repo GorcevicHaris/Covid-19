@@ -7,6 +7,45 @@ function Homepage() {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
   const [secondData, setSecondData] = useState([]);
+  const [sortOrder, setSortOrder] = useState("asc");
+
+  const handleSortByTotalCases = () => {
+    const sortedData = [...data]; // Napravite kopiju podataka da ne biste direktno mijenjali originalni niz
+
+    sortedData.sort((a, b) => {
+      if (sortOrder === "asc") {
+        return (
+          parseInt(a.cases.replace(/,/g, "")) -
+          parseInt(b.cases.replace(/,/g, ""))
+        );
+      } else {
+        return (
+          parseInt(b.cases.replace(/,/g, "")) -
+          parseInt(a.cases.replace(/,/g, ""))
+        );
+      }
+    });
+
+    // Ažurirajte redosled sortiranja
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    setData(sortedData);
+  };
+  const handleSortByNewCases = () => {
+    const sortedData = [...data]; // Napravi kopiju podataka
+    sortedData.sort((a, b) => {
+      return sortOrder === "asc"
+        ? parseNewCases(a) - parseNewCases(b)
+        : parseNewCases(b) - parseNewCases(a);
+    });
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc"); // Promeni redosled sortiranja
+    setData([...sortedData]); // Ažuriraj stanje sa sortiranim podacima
+  };
+
+  const parseNewCases = (entry) => {
+    // Funkcija za parsiranje novih slučajeva iz stringa u broj
+    const newCases = entry.new_cases.replace(/[^\d.-]/g, ""); // Ukloni sve osim brojeva, tačke i minusa
+    return parseFloat(newCases);
+  };
 
   function getData() {
     axios
@@ -43,8 +82,12 @@ function Homepage() {
     <div className="container">
       <div className="card">
         <div className="div">Country</div>
-        <div className="div">Total Cases</div>
-        <div className="div">New Cases</div>
+        <div className="div" onClick={handleSortByTotalCases}>
+          Total Cases
+        </div>
+        <div className="div" onClick={handleSortByNewCases}>
+          New Cases
+        </div>
         <div className="div">Total Deaths</div>
         <div className="div">New Deaths</div>
         <div className="div">Total Recovered</div>
@@ -65,13 +108,13 @@ function Homepage() {
               <h4>{el.total_cases}</h4>
             </div>
             <div className="div">
-              <h4>{el.new_cases}</h4>
+              <h4>+{el.new_cases}</h4>
             </div>
             <div className="div">
               <h4>{el.total_deaths}</h4>
             </div>
             <div className="div">
-              <h4>{el.new_deaths}</h4>
+              <h4>+{el.new_deaths}</h4>
             </div>
             <div className="div">
               <h4>{el.total_recovered}</h4>
