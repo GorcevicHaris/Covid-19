@@ -1,25 +1,13 @@
-import { useEffect, useState } from "react";
-import "./App.css";
-import axios from "axios";
-function App() {
-  const [data, setData] = useState([]);
-  function getData() {
-    axios
-      .get(`https://corona-virus-world-and-india-data.p.rapidapi.com/api`, {
-        headers: {
-          "X-RapidAPI-Key":
-            "1b2013684fmsh5e2154cde374d29p1987b9jsnf9a0e60af14e",
-          "X-RapidAPI-Host": "corona-virus-world-and-india-data.p.rapidapi.com",
-        },
-      })
-      .then((response) => setData(response.data));
-  }
-  useEffect(() => {
-    getData();
-  }, []);
-  console.log(data);
-  return <div className="App"></div>;
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Homepage from "./Pages/HomePage";
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
-////
-export default App;
-//
