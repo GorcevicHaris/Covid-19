@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Children, useEffect, useState } from "react";
 import axios from "axios";
 import { logDOM } from "@testing-library/react";
 import "./homepage.css";
@@ -6,6 +6,7 @@ import Card from "../Components/Card";
 function Homepage() {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
+  const [secondData, setSecondData] = useState([]);
 
   function getData() {
     axios
@@ -16,7 +17,13 @@ function Homepage() {
           "X-RapidAPI-Host": "corona-virus-world-and-india-data.p.rapidapi.com",
         },
       })
-      .then((response) => setData(response.data.countries_stat))
+      .then((response) => {
+        setData(response.data.countries_stat);
+        const neww = response.data.world_total;
+        let l = [];
+        l.push(neww);
+        setSecondData(l);
+      })
       .catch((error) => {
         if (error.response && error.response.status === 429) {
           // If 429 status received, wait for 5 seconds and retry
@@ -29,6 +36,7 @@ function Homepage() {
   useEffect(() => {
     getData();
   }, []);
+  console.log(secondData);
   console.log(search);
   console.log(data);
   return (
@@ -47,7 +55,47 @@ function Homepage() {
         <div className="div">Total Tests</div>
         <div className="div">Tests/ 1M </div>
       </div>
-
+      {secondData &&
+        secondData.map((el) => (
+          <div className="card" style={{ backgroundColor: "lightgray" }}>
+            <div className="div">
+              <h4>World</h4>
+            </div>
+            <div className="div">
+              <h4>{el.total_cases}</h4>
+            </div>
+            <div className="div">
+              <h4>{el.new_cases}</h4>
+            </div>
+            <div className="div">
+              <h4>{el.total_deaths}</h4>
+            </div>
+            <div className="div">
+              <h4>{el.new_deaths}</h4>
+            </div>
+            <div className="div">
+              <h4>{el.total_recovered}</h4>
+            </div>
+            <div className="div">
+              <h4>{el.active_cases}</h4>
+            </div>
+            <div className="div">
+              <h4>{el.serious_critical}</h4>
+            </div>
+            <div className="div">
+              <h4>{el.total_cases_per_1m_population}</h4>
+            </div>
+            <div className="div">
+              <h4>{el.deaths_per_1m_population}</h4>
+            </div>
+            <div className="div">
+              <h4>{0}</h4>
+            </div>
+            <div className="div">
+              <h4>{0}</h4>
+            </div>
+          </div>
+        ))}
       {data?.map((el, index) => (
         <div className="card">
           <div className="div">{el.country_name}</div>
@@ -61,7 +109,9 @@ function Homepage() {
           >
             {el.new_cases > 0 ? <h4>+{el.new_cases}</h4> : ""}
           </div>
-          <div className="div">{el.deaths}</div>
+          <div className="div">
+            {parseFloat(el.deaths) > 0 ? <h4>{el.deaths}</h4> : ""}
+          </div>
           {
             <div
               className="div"
@@ -73,7 +123,13 @@ function Homepage() {
               {el.new_deaths > 0 ? <h4>+{el.new_deaths}</h4> : ""}
             </div>
           }
-          <div className="div">{el.total_recovered}</div>
+          <div className="div">
+            {parseFloat(el.total_recovered) > 0 ? (
+              <h4>{el.total_recovered}</h4>
+            ) : (
+              ""
+            )}
+          </div>
           <div className="div">
             {parseFloat(el.active_cases) > 0 ? <h4>{el.active_cases}</h4> : ""}
           </div>
@@ -102,7 +158,11 @@ function Homepage() {
             {parseFloat(el.total_tests) > 0 ? <h4>{el.total_tests}</h4> : ""}
           </div>
           <div className="div">
-            {parseFloat(el.active_cases) > 0 ? <h4>{el.active_cases}</h4> : ""}
+            {parseFloat(el.tests_per_1m_population) > 0 ? (
+              <h4>{el.tests_per_1m_population}</h4>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       ))}
