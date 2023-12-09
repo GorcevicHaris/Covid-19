@@ -16,11 +16,19 @@ function Homepage() {
           "X-RapidAPI-Host": "corona-virus-world-and-india-data.p.rapidapi.com",
         },
       })
-      .then((response) => setData(response.data.countries_stat));
+      .then((response) => setData(response.data.countries_stat))
+      .catch((error) => {
+        if (error.response && error.response.status === 429) {
+          // If 429 status received, wait for 5 seconds and retry
+          setTimeout(getData, 3000);
+        } else {
+          console.error("Error fetching data:", error);
+        }
+      });
   }
   useEffect(() => {
     getData();
-  }, [search]);
+  }, []);
   console.log(search);
   console.log(data);
   return (
@@ -37,10 +45,10 @@ function Homepage() {
         <div className="div">Tot Cases 1M pop</div>
         <div className="div">Deaths/ 1M pop</div>
         <div className="div">Total Tests</div>
-        <div className="div">Tests/ 1M pop</div>
+        <div className="div">Tests/ 1M </div>
       </div>
 
-      {data.map((el, index) => (
+      {data?.map((el, index) => (
         <div className="card">
           <div className="div">{el.country_name}</div>
           <div className="div">{el.cases}</div>
@@ -66,12 +74,36 @@ function Homepage() {
             </div>
           }
           <div className="div">{el.total_recovered}</div>
-          <div className="div">{el.active_cases}</div>
-          <div className="div">{el.serious_critical}</div>
-          <div className="div">{el.total_cases_per_1m_population}</div>
-          <div className="div">{el.deaths_per_1m_population}</div>
-          <div className="div">{el.total_tests}</div>
-          <div className="div">{el.tests_per_1m_population}</div>
+          <div className="div">
+            {parseFloat(el.active_cases) > 0 ? <h4>{el.active_cases}</h4> : ""}
+          </div>
+          <div className="div">
+            {parseFloat(el.serious_critical) > 0 ? (
+              <h4>{el.serious_critical}</h4>
+            ) : (
+              ""
+            )}
+          </div>
+          <div className="div">
+            {parseFloat(el.total_cases_per_1m_population) > 0 ? (
+              <h4>{el.total_cases_per_1m_population}</h4>
+            ) : (
+              ""
+            )}
+          </div>
+          <div className="div">
+            {parseFloat(el.deaths_per_1m_population) > 0 ? (
+              <h4>{el.deaths_per_1m_population}</h4>
+            ) : (
+              ""
+            )}
+          </div>
+          <div className="div">
+            {parseFloat(el.total_tests) > 0 ? <h4>{el.total_tests}</h4> : ""}
+          </div>
+          <div className="div">
+            {parseFloat(el.active_cases) > 0 ? <h4>{el.active_cases}</h4> : ""}
+          </div>
         </div>
       ))}
     </div>
