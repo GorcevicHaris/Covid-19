@@ -10,6 +10,9 @@ export default function Header() {
         className="corona"
         src="corona.png"
       ></img>
+      <h1 onClick={() => navigate("/worldometer")}>
+        W O R L D O &nbsp; M E T E R
+      </h1>
     </div>
   );
 }
