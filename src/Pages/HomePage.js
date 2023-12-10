@@ -42,10 +42,11 @@ function Homepage() {
   };
 
   const parseNewCases = (entry) => {
-    // Funkcija za parsiranje novih slučajeva iz stringa u broj
+    // Funkcija za parsiranje novih smrtnih slučajeva iz stringa u broj
     const newCases = entry.new_cases.replace(/[^\d.-]/g, ""); // Ukloni sve osim brojeva, tačke i minusa
     return parseFloat(newCases);
   };
+
   const handleSortByTotalDeaths = () => {
     const sortedData = [...data]; // Napravi kopiju podataka
     sortedData.sort((a, b) => {
@@ -193,6 +194,27 @@ function Homepage() {
 
     return totalRecovered ? parseFloat(totalRecovered) : 0; // Check for empty or invalid values
   };
+  const handleSort1MTests = () => {
+    const sortedData = [...data]; // Create a copy of the data
+    sortedData.sort((a, b) => {
+      return sortOrder === "asc"
+        ? parse1MTests(a) - parse1MTests(b)
+        : parse1MTests(b) - parse1MTests(a);
+    });
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc"); // Change the sorting order
+    setData([...sortedData]); // Update the state with the sorted data
+  };
+
+  const parse1MTests = (entry) => {
+    console.log(entry, "entr");
+
+    const totalRecovered = entry.tests_per_1m_population.replace(
+      /[^\d.-]/g,
+      ""
+    ); // Remove all non-numeric characters
+
+    return totalRecovered ? parseFloat(totalRecovered) : 0; // Check for empty or invalid values
+  };
   // function handleSortByTotalRecover() {
   //   const sortedData = [...data];
   //   sortedData.sort((a, b) => {
@@ -263,8 +285,12 @@ function Homepage() {
         <div className="div" onClick={handleSortBy1MDeaths}>
           Deaths/ 1M pop
         </div>
-        <div className="div">Total Tests</div>
-        <div className="div">Tests/ 1M </div>
+        <div className="div" onClick={handleSortTotalTest}>
+          Total Tests
+        </div>
+        <div className="div" onClick={handleSort1MTests}>
+          Tests/ 1M{" "}
+        </div>
       </div>
       {secondData &&
         secondData.map((el) => (
@@ -318,22 +344,21 @@ function Homepage() {
               color: "white",
             }}
           >
-            {el.new_cases > 0 ? <h4>+{el.new_cases}</h4> : ""}
+            {parseFloat(el.new_cases) > 0 ? <h4>+{el.new_cases}</h4> : ""}
           </div>
           <div className="div">
             {parseFloat(el.deaths) > 0 ? <h4>{el.deaths}</h4> : ""}
           </div>
-          {
-            <div
-              className="div"
-              style={{
-                backgroundColor: el.new_deaths > 0 ? "red" : "",
-                color: "white",
-              }}
-            >
-              {el.new_deaths > 0 ? <h4>+{el.new_deaths}</h4> : ""}
-            </div>
-          }
+          <div
+            className="div"
+            style={{
+              backgroundColor: el.new_deaths > 0 ? "red" : "",
+              color: "white",
+            }}
+          >
+            {el.new_deaths > 0 ? <h4>+{el.new_deaths}</h4> : ""}
+          </div>
+
           <div className="div">
             {parseFloat(el.total_recovered) > 0 ? (
               <h4>{el.total_recovered}</h4>
