@@ -78,7 +78,129 @@ function Homepage() {
     const newDeaths = entry.new_deaths.replace(/[^\d.-]/g, ""); // Ukloni sve osim brojeva, tačke i minusa
     return parseFloat(newDeaths);
   };
+  const handleSortByTotalRecover = () => {
+    const sortedData = [...data]; // Create a copy of the data
+    sortedData.sort((a, b) => {
+      return sortOrder === "asc"
+        ? parseTotalRecover(a) - parseTotalRecover(b)
+        : parseTotalRecover(b) - parseTotalRecover(a);
+    });
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc"); // Change the sorting order
+    setData([...sortedData]); // Update the state with the sorted data
+  };
 
+  const parseTotalRecover = (entry) => {
+    console.log(entry, "entr");
+
+    const totalRecovered = entry.total_recovered.replace(/[^\d.-]/g, ""); // Remove all non-numeric characters
+
+    return totalRecovered ? parseFloat(totalRecovered) : 0; // Check for empty or invalid values
+  };
+  const handleSortByActiveCases = () => {
+    const sortedData = [...data]; // Create a copy of the data
+    sortedData.sort((a, b) => {
+      return sortOrder === "asc"
+        ? parseActiveCases(a) - parseActiveCases(b)
+        : parseActiveCases(b) - parseActiveCases(a);
+    });
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc"); // Change the sorting order
+    setData([...sortedData]); // Update the state with the sorted data
+  };
+
+  const parseActiveCases = (entry) => {
+    console.log(entry, "entr");
+
+    const totalRecovered = entry.active_cases.replace(/[^\d.-]/g, ""); // Remove all non-numeric characters
+
+    return totalRecovered ? parseFloat(totalRecovered) : 0; // Check for empty or invalid values
+  };
+
+  const handleSortBySeriousCritical = () => {
+    const sortedData = [...data]; // Create a copy of the data
+    sortedData.sort((a, b) => {
+      return sortOrder === "asc"
+        ? parseSeriousCritical(a) - parseSeriousCritical(b)
+        : parseSeriousCritical(b) - parseSeriousCritical(a);
+    });
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc"); // Change the sorting order
+    setData([...sortedData]); // Update the state with the sorted data
+  };
+
+  const parseSeriousCritical = (entry) => {
+    console.log(entry, "entr");
+
+    const totalRecovered = entry.serious_critical.replace(/[^\d.-]/g, ""); // Remove all non-numeric characters
+
+    return totalRecovered ? parseFloat(totalRecovered) : 0; // Check for empty or invalid values
+  };
+  const handleSortBy1MCases = () => {
+    const sortedData = [...data]; // Create a copy of the data
+    sortedData.sort((a, b) => {
+      return sortOrder === "asc"
+        ? parse1mCases(a) - parse1mCases(b)
+        : parse1mCases(b) - parse1mCases(a);
+    });
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc"); // Change the sorting order
+    setData([...sortedData]); // Update the state with the sorted data
+  };
+
+  const parse1mCases = (entry) => {
+    console.log(entry, "entr");
+
+    const totalRecovered = entry.total_cases_per_1m_population.replace(
+      /[^\d.-]/g,
+      ""
+    ); // Remove all non-numeric characters
+
+    return totalRecovered ? parseFloat(totalRecovered) : 0; // Check for empty or invalid values
+  };
+  const handleSortBy1MDeaths = () => {
+    const sortedData = [...data]; // Create a copy of the data
+    sortedData.sort((a, b) => {
+      return sortOrder === "asc"
+        ? parse1mDeaths(a) - parse1mDeaths(b)
+        : parse1mDeaths(b) - parse1mDeaths(a);
+    });
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc"); // Change the sorting order
+    setData([...sortedData]); // Update the state with the sorted data
+  };
+
+  const parse1mDeaths = (entry) => {
+    console.log(entry, "entr");
+
+    const totalRecovered = entry.deaths_per_1m_population.replace(
+      /[^\d.-]/g,
+      ""
+    ); // Remove all non-numeric characters
+
+    return totalRecovered ? parseFloat(totalRecovered) : 0; // Check for empty or invalid values
+  };
+  const handleSortTotalTest = () => {
+    const sortedData = [...data]; // Create a copy of the data
+    sortedData.sort((a, b) => {
+      return sortOrder === "asc"
+        ? parseTotalTest(a) - parseTotalTest(b)
+        : parseTotalTest(b) - parseTotalTest(a);
+    });
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc"); // Change the sorting order
+    setData([...sortedData]); // Update the state with the sorted data
+  };
+
+  const parseTotalTest = (entry) => {
+    console.log(entry, "entr");
+
+    const totalRecovered = entry.total_tests.replace(/[^\d.-]/g, ""); // Remove all non-numeric characters
+
+    return totalRecovered ? parseFloat(totalRecovered) : 0; // Check for empty or invalid values
+  };
+  // function handleSortByTotalRecover() {
+  //   const sortedData = [...data];
+  //   sortedData.sort((a, b) => {
+  //     return a.total_recovered - b.total_recovered;
+  //   });
+  //   console.log(sortedData, "sprted");
+  //   setData(sortedData);
+  // }
   function getData() {
     axios
       .get(`https://corona-virus-world-and-india-data.p.rapidapi.com/api`, {
@@ -126,11 +248,21 @@ function Homepage() {
         <div className="div" onClick={handleSortByNewDeaths}>
           New Deaths
         </div>
-        <div className="div">Total Recovered</div>
-        <div className="div">Active Cases</div>
-        <div className="div">Serious Critical</div>
-        <div className="div">Tot Cases 1M pop</div>
-        <div className="div">Deaths/ 1M pop</div>
+        <div className="div" onClick={handleSortByTotalRecover}>
+          Total Recovered
+        </div>
+        <div className="div" onClick={handleSortByActiveCases}>
+          Active Cases
+        </div>
+        <div className="div" onClick={handleSortBySeriousCritical}>
+          Serious Critical
+        </div>
+        <div className="div" onClick={handleSortBy1MCases}>
+          Tot Cases 1M pop
+        </div>
+        <div className="div" onClick={handleSortBy1MDeaths}>
+          Deaths/ 1M pop
+        </div>
         <div className="div">Total Tests</div>
         <div className="div">Tests/ 1M </div>
       </div>
