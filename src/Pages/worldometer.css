@@ -4,23 +4,20 @@
 }
 .worldometer{
     width: 100vw;
-    height: 100vh;
-    background-color: yellow;
+    height: auto;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 .mid{
     width: 40%;
-    height: 100%;
-    background-color: gray;
+    height: auto;
     display: flex;
     flex-direction: column;
     padding-top: 30px;
 }
 .info{
     height: 40px;
-    background-color: red;
     width: 100%;
     font-family: 'Open Sans', sans-serif;
     padding-left: 30px;
