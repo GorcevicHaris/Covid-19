@@ -46,6 +46,38 @@ function Homepage() {
     const newCases = entry.new_cases.replace(/[^\d.-]/g, ""); // Ukloni sve osim brojeva, tačke i minusa
     return parseFloat(newCases);
   };
+  const handleSortByTotalDeaths = () => {
+    const sortedData = [...data]; // Napravi kopiju podataka
+    sortedData.sort((a, b) => {
+      return sortOrder === "asc"
+        ? parseDeaths(a) - parseDeaths(b)
+        : parseDeaths(b) - parseDeaths(a);
+    });
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc"); // Promeni redosled sortiranja
+    setData([...sortedData]); // Ažuriraj stanje sa sortiranim podacima
+  };
+
+  const parseDeaths = (entry) => {
+    // Funkcija za parsiranje novih slučajeva iz stringa u broj
+    const newCases = entry.deaths.replace(/[^\d.-]/g, ""); // Ukloni sve osim brojeva, tačke i minusa
+    return parseFloat(newCases);
+  };
+  const handleSortByNewDeaths = () => {
+    const sortedData = [...data]; // Napravi kopiju podataka
+    sortedData.sort((a, b) => {
+      return sortOrder === "asc"
+        ? parseNewDeaths(a) - parseNewDeaths(b)
+        : parseNewDeaths(b) - parseNewDeaths(a);
+    });
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc"); // Promeni redosled sortiranja
+    setData([...sortedData]); // Ažuriraj stanje sa sortiranim podacima
+  };
+
+  const parseNewDeaths = (entry) => {
+    // Funkcija za parsiranje novih smrtnih slučajeva iz stringa u broj
+    const newDeaths = entry.new_deaths.replace(/[^\d.-]/g, ""); // Ukloni sve osim brojeva, tačke i minusa
+    return parseFloat(newDeaths);
+  };
 
   function getData() {
     axios
@@ -88,8 +120,12 @@ function Homepage() {
         <div className="div" onClick={handleSortByNewCases}>
           New Cases
         </div>
-        <div className="div">Total Deaths</div>
-        <div className="div">New Deaths</div>
+        <div className="div" onClick={handleSortByTotalDeaths}>
+          Total Deaths
+        </div>
+        <div className="div" onClick={handleSortByNewDeaths}>
+          New Deaths
+        </div>
         <div className="div">Total Recovered</div>
         <div className="div">Active Cases</div>
         <div className="div">Serious Critical</div>
