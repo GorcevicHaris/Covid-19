@@ -8,6 +8,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-bottom: 40px;
 }
 .mid{
     width: 40%;

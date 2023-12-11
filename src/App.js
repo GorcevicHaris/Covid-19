@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Homepage from "./Pages/HomePage";
 import Header from "./Header/Header";
 import WorldoMeter from "./Pages/WorldoMeter";
+import Population from "./Pages/Population";
 
 export default function App() {
   return (
@@ -10,6 +11,7 @@ export default function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Homepage />} />
+        <Route path="/population" element={<Population />} />
         <Route path="/worldometer" element={<WorldoMeter />} />
       </Routes>
     </BrowserRouter>
