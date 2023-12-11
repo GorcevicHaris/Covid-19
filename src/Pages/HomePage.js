@@ -91,8 +91,6 @@ function Homepage() {
   };
 
   const parseTotalRecover = (entry) => {
-    console.log(entry, "entr");
-
     const totalRecovered = entry.total_recovered.replace(/[^\d.-]/g, ""); // Remove all non-numeric characters
 
     return totalRecovered ? parseFloat(totalRecovered) : 0; // Check for empty or invalid values
@@ -109,8 +107,6 @@ function Homepage() {
   };
 
   const parseActiveCases = (entry) => {
-    console.log(entry, "entr");
-
     const totalRecovered = entry.active_cases.replace(/[^\d.-]/g, ""); // Remove all non-numeric characters
 
     return totalRecovered ? parseFloat(totalRecovered) : 0; // Check for empty or invalid values
@@ -128,8 +124,6 @@ function Homepage() {
   };
 
   const parseSeriousCritical = (entry) => {
-    console.log(entry, "entr");
-
     const totalRecovered = entry.serious_critical.replace(/[^\d.-]/g, ""); // Remove all non-numeric characters
 
     return totalRecovered ? parseFloat(totalRecovered) : 0; // Check for empty or invalid values
@@ -146,8 +140,6 @@ function Homepage() {
   };
 
   const parse1mCases = (entry) => {
-    console.log(entry, "entr");
-
     const totalRecovered = entry.total_cases_per_1m_population.replace(
       /[^\d.-]/g,
       ""
@@ -167,8 +159,6 @@ function Homepage() {
   };
 
   const parse1mDeaths = (entry) => {
-    console.log(entry, "entr");
-
     const totalRecovered = entry.deaths_per_1m_population.replace(
       /[^\d.-]/g,
       ""
@@ -188,8 +178,6 @@ function Homepage() {
   };
 
   const parseTotalTest = (entry) => {
-    console.log(entry, "entr");
-
     const totalRecovered = entry.total_tests.replace(/[^\d.-]/g, ""); // Remove all non-numeric characters
 
     return totalRecovered ? parseFloat(totalRecovered) : 0; // Check for empty or invalid values
@@ -206,8 +194,6 @@ function Homepage() {
   };
 
   const parse1MTests = (entry) => {
-    console.log(entry, "entr");
-
     const totalRecovered = entry.tests_per_1m_population.replace(
       /[^\d.-]/g,
       ""
@@ -242,7 +228,7 @@ function Homepage() {
       .catch((error) => {
         if (error.response && error.response.status === 429) {
           // If 429 status received, wait for 5 seconds and retry
-          setTimeout(getData, 3000);
+          setTimeout(getData, 1000);
         } else {
           console.error("Error fetching data:", error);
         }
@@ -251,9 +237,6 @@ function Homepage() {
   useEffect(() => {
     getData();
   }, []);
-  console.log(secondData);
-  console.log(search);
-  console.log(data);
   return (
     <div className="container">
       <div className="card">

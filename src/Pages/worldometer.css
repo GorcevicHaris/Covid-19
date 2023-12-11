@@ -17,12 +17,13 @@
     flex-direction: column;
     padding-top: 30px;
 }
-.info{
+.infos{
     height: 40px;
     width: 100%;
     font-family: 'Open Sans', sans-serif;
     padding-left: 30px;
-    border-bottom: 0.3px solid gray;
+    border-bottom: 1px solid;
     display: flex;
     align-items: center;
+    color: black;
 }
