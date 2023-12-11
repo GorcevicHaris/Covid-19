@@ -3,7 +3,7 @@ import "./worldometer.css";
 export default function WorldoMeter() {
   return (
     <div className="worldometer">
-      <div className="mid">
+      <div className="mid" style={{ width: "40%" }}>
         <div
           style={{ fontSize: "23px", fontWeight: "100", color: "gray" }}
           className="info"

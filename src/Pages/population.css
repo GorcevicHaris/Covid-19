@@ -6,10 +6,16 @@
 .population{
     width: 100vw;
     height: 100vh;
-    background-color: yellow;
     display: flex;
-    justify-content: center ;
-    padding-top: 100px;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 50px;
+}
+.inpbtn{
+    width: 700px;
+    height: 70px;
+    display: flex;
+    flex-direction: row;
 }
 .inp1{
     width: 300px;
@@ -17,15 +23,19 @@
     border: none;
 
 }
-.inpbtn{
-    width: 400px;
-    height: 40px;
-    display: flex;
-    flex-direction: row;
-    gap: 5px;
-}
 button{
     width:100px;
     border: none;
     background-color: white;
+}
+
+.mid{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    padding-top: 30px;
+}
+.datas{
+    width: 700px;
 }
