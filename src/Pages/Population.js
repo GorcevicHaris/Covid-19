@@ -54,8 +54,8 @@ function Population() {
             onClick={getData}
             sx={{
               width: "120px",
-              border: "1px solid   #383838 ",
-              color: "gray",
+              border: "1px solid   #989898	",
+              color: "white",
             }}
             variant="outlined"
           >
@@ -67,7 +67,7 @@ function Population() {
         <div className="datas">
           <div className="mid">
             <div
-              style={{ fontSize: "23px", fontWeight: "100", color: "gray" }}
+              style={{ fontSize: "23px", fontWeight: "100" }}
               className="info"
             >
               POPULATION
