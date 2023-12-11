@@ -21,22 +21,19 @@ function Population() {
         setData(response.data);
       });
   }
+
   console.log(search);
   console.log(data);
   return (
     <div className="population">
       <div className="inpbtn">
-        {/* <input
-          className="inp1"
-          onChange={(e) => setSearch(e.target.value)}
-        ></input>
-        <button onClick={getData}>Search</button> */}
         <Box
           component="form"
           sx={{
             "& .MuiTextField-root": {
               m: 1,
               width: "50ch",
+              color: "white",
             },
           }}
           noValidate
@@ -47,24 +44,25 @@ function Population() {
             id="outlined-required"
             label="Search for any Country"
             onChange={(e) => setSearch(e.target.value)}
+            InputProps={{
+              style: { color: "white" }, // postavljanje boje teksta na bijelu
+            }}
           />
         </Box>
-        <Stack
-          sx={{ marginTop: "8px" }}
-          height={56}
-          spacing={2}
-          direction="row"
-        >
+        <Stack sx={{ marginTop: "8px" }} height={56} direction="row">
           <Button
             onClick={getData}
-            sx={{ width: "120px", border: "1px solid  #BEBEBE", color: "gray" }}
+            sx={{
+              width: "120px",
+              border: "1px solid   #383838 ",
+              color: "gray",
+            }}
             variant="outlined"
           >
             Search
           </Button>
         </Stack>
       </div>
-
       {data.map((el) => (
         <div className="datas">
           <div className="mid">
