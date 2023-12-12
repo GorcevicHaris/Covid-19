@@ -4,6 +4,7 @@ import Homepage from "./Pages/HomePage";
 import Header from "./Header/Header";
 import WorldoMeter from "./Pages/WorldoMeter";
 import Population from "./Pages/Population";
+import Footer from "./Footer/Footer";
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
         <Route path="/population" element={<Population />} />
         <Route path="/worldometer" element={<WorldoMeter />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }

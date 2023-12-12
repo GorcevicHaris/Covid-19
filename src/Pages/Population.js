@@ -150,7 +150,7 @@ function Population() {
       ) : (
         <h1
           style={{
-            paddingTop: "200px",
+            paddingTop: "220px",
             color: "white",
             fontSize: "35px",
             textTransform: "uppercase",

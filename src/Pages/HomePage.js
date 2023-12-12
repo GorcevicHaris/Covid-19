@@ -374,14 +374,10 @@ function Homepage() {
             )}
           </div>
           <div className="div">
-            {parseFloat(el.total_tests) > 0 ? <h4>{el.total_tests}</h4> : ""}
+            <h4>{el.total_tests}</h4>
           </div>
           <div className="div">
-            {parseFloat(el.tests_per_1m_population) > 0 ? (
-              <h4>{el.tests_per_1m_population}</h4>
-            ) : (
-              ""
-            )}
+            <h4>{el.tests_per_1m_population}</h4>
           </div>
         </div>
       ))}
