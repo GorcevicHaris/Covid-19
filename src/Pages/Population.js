@@ -19,11 +19,12 @@ function Population() {
       })
       .then((response) => {
         setData(response.data);
+        setSearch("");
       });
   }
-
   console.log(search);
   console.log(data);
+  useEffect(() => {}, [search]);
   return (
     <div className="population">
       <div className="inpbtn">
@@ -44,6 +45,7 @@ function Population() {
             id="outlined-required"
             label="Search for any Country"
             onChange={(e) => setSearch(e.target.value)}
+            value={search}
             InputProps={{
               style: { color: "white" }, // postavljanje boje teksta na bijelu
             }}
@@ -146,9 +148,17 @@ function Population() {
           </div>
         ))
       ) : (
-        <div className="divlj">
-          <h1 color="black">THis country are no longet country {search}</h1>
-        </div>
+        <h1
+          style={{
+            paddingTop: "200px",
+            color: "white",
+            fontSize: "35px",
+            textTransform: "uppercase",
+            letterSpacing: "3px",
+          }}
+        >
+          {search} does not exist
+        </h1>
       )}
     </div>
   );
